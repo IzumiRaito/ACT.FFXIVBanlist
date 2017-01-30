@@ -52,6 +52,8 @@
       <DependentUpon>BanlistWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="FFXIVBanlist.cs" />
+    <Compile Include="Processing\CommandParser.cs" />
+    <Compile Include="Processing\DateExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
