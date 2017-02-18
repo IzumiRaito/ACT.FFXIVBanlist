@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FFXIVBanlist.Model;
 
 namespace FFXIVBanlist.Processing
 {
@@ -9,13 +10,22 @@ namespace FFXIVBanlist.Processing
     {
         public class Command
         {
-            public const string ADD = "add";
+            public const string BAN = "ban";
+            public const string INFO = "info";
+            public const string COMMEND = "comm";
             public const string REMOVE = "remove";
             public const string FIND = "find";
         }
         const string ECHO_IDENTIFIER = "00:0038:";
         const string PREFIX_1 = "blist";
         const string PREFIX_2 = "banlist";
+
+        private IDataStore dataStore;
+
+        public CommandParser(IDataStore dataStore)
+        {
+            this.dataStore = dataStore;
+        }
 
         public bool IsCommnad(string line)
         {
@@ -39,9 +49,17 @@ namespace FFXIVBanlist.Processing
                 return String.Format("Incorrect command prefix. Requires {0} or {1}", PREFIX_1, PREFIX_2); 
             }
             string command = parts[1];
-            if (string.Equals(command, Command.ADD))
+            if (string.Equals(command, Command.BAN))
             {
-                return ProcessAdd(parts);
+                return ProcessAdd(parts, Note.Type.BAD);
+            }
+            if (string.Equals(command, Command.INFO))
+            {
+                return ProcessAdd(parts, Note.Type.NEUTRAL);
+            }
+            if (string.Equals(command, Command.COMMEND))
+            {
+                return ProcessAdd(parts, Note.Type.GOOD);
             }
             else if (string.Equals(command, Command.REMOVE))
             {
@@ -53,23 +71,30 @@ namespace FFXIVBanlist.Processing
             }
             else
             {
-                return String.Format("Invalid command {0}. Requires {1}, {2} or {3}",
-                    command, Command.ADD, Command.REMOVE, Command.FIND); 
+                return String.Format("Invalid command {0}. Requires {1}, {2} , {3} , {4} or {5}",
+                    command, Command.BAN, Command.COMMEND, Command.INFO, Command.REMOVE, Command.FIND); 
             }
         }
 
 
-        private string ProcessAdd(string[] parts)
+        private string ProcessAdd(string[] parts, Note.Type type)
         {
-            if (parts.Length < 5)
+            if (parts.Length < 6)
             {
                 return "Invalid parameters for command. Requires first_name last_name server.";
             }
             string firstName = parts[2];
             string lastName = parts[3];
             string server = parts[4];
+            StringBuilder message = new StringBuilder();
+            for (int i = 5; i < parts.Length; i++)
+            {
+                message.Append(parts[i]).Append(" ");
+            }
+            dataStore.AddNote(firstName, lastName, server, type, message.ToString());
 
-            return "Process add";
+            return string.Format("{0} added for player {1} {2} on {3}", 
+                type.ToString(), firstName, lastName, server);
         }
 
         private string ProcessRemove(string[] parts)

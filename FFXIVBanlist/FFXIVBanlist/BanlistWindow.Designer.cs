@@ -1,8 +1,9 @@
 ﻿using System.Text;
 using System.Collections.Generic;
+using FFXIVBanlist.Logging;
 namespace FFXIVBanlist
 {
-    partial class BanlistWindow
+    partial class BanlistWindow : ILogger
     {
         /// <summary> 
         /// Required designer variable.
@@ -36,9 +37,9 @@ namespace FFXIVBanlist
             // ConsoleOutput
             // 
             this.ConsoleOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ConsoleOutput.Location = new System.Drawing.Point(4, 30);
+            this.ConsoleOutput.Location = new System.Drawing.Point(3, 26);
             this.ConsoleOutput.Name = "ConsoleOutput";
-            this.ConsoleOutput.Size = new System.Drawing.Size(682, 315);
+            this.ConsoleOutput.Size = new System.Drawing.Size(800, 550);
             this.ConsoleOutput.TabIndex = 0;
             this.ConsoleOutput.Text = "This is the multiline console output";
             // 
@@ -48,14 +49,14 @@ namespace FFXIVBanlist
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ConsoleOutput);
             this.Name = "BanlistWindow";
-            this.Size = new System.Drawing.Size(689, 345);
+            this.Size = new System.Drawing.Size(800, 600);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        const int CONSOLE_SIZE = 10;
+        const int CONSOLE_SIZE = 22;
 
         private System.Windows.Forms.Label ConsoleOutput;
 
@@ -87,5 +88,11 @@ namespace FFXIVBanlist
 
             ConsoleOutput.Text = newText.ToString();
         }
+
+        public void Log(string message)
+        {
+            AppendLine(message);
+        }
+        
     }
 }

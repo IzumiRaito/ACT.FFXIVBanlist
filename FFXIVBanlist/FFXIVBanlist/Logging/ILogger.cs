@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BanlistUnitTests
+namespace FFXIVBanlist.Logging
 {
-    class CommandParserTest
+    public interface ILogger
     {
+        void Log(string message);
     }
 }

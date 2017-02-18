@@ -51,7 +51,14 @@
     <Compile Include="BanlistWindow.Designer.cs">
       <DependentUpon>BanlistWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataSource\XmlBanlist.cs" />
     <Compile Include="FFXIVBanlist.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Model\IDataSource.cs" />
+    <Compile Include="Model\Note.cs" />
+    <Compile Include="Model\NoteIdSource.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerIdSource.cs" />
     <Compile Include="Processing\CommandParser.cs" />
     <Compile Include="Processing\DateExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +68,7 @@
       <DependentUpon>BanlistWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
